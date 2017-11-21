@@ -1,0 +1,23 @@
+{
+  "name": "starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:dev": "cross-env NODE_ENV=development webpack-dev-server",
+    "clean": "rimraf build",
+    "start": "npm run build:dev"
+  },
+  "keywords": [],
+  "author": "Dawid sappich",
+  "license": "ISC",
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.4.0",
+    "cross-env": "^5.1.1",
+    "rimraf": "^2.6.2",
+    "ts-loader": "^3.1.1",
+    "typescript": "^2.6.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4"
+  }
+}
