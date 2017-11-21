@@ -5,9 +5,17 @@ const typescript = require('typescript');
 const rules = [
 	{
 		test: /\.ts$/,
-		loaders: [
+		use: [
 			'awesome-typescript-loader'/*, 'angular-router-loader', 'angular2-template-loader'*/
 		]
+	},
+	{
+		test: /\.(jpe?g|png|gif|svg)$/i,
+		use: 'file-loader'
+	},
+	{
+		test: /\.html$/,
+		use: 'html-loader'
 	}
 ]
 
@@ -27,7 +35,19 @@ module.exports = {
 		port: 8080,
 		// bundled files will be available under this path
 		// e.g. http://localhost:8080/build/app.bundle.js
-		publicPath: '/build/'
+		publicPath: '/build/',
+		// logging info
+		stats: {
+			chunks: false,
+			chunkModules: false,
+			chunkOrigins: false,
+			errors: true,
+			errorDetails: false,
+			hash: false,
+			timings: false,
+			modules: false,
+			warnings: false
+		}
 	},
 	// each key is the name of the chunk, the value is entry point fot the chunk
 	entry: {
@@ -56,6 +76,12 @@ module.exports = {
 			'process.env': {
 				'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
 			}
+		}),
+		// create a chunk
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendor',
+			// all files from node_modules in a seperate chunk
+			minChunks: (module) => module.context && /node_modules/.test(module.context)
 		})
 	],
 	resolve: {
