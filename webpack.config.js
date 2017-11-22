@@ -6,17 +6,14 @@ const rules = [
 	{
 		test: /\.ts$/,
 		use: [
-			'awesome-typescript-loader'/*, 'angular-router-loader', 'angular2-template-loader'*/
+			'awesome-typescript-loader', 'angular-router-loader', 'angular2-template-loader'
 		]
 	},
-	{
-		test: /\.(jpe?g|png|gif|svg)$/i,
-		use: 'file-loader'
-	},
-	{
-		test: /\.html$/,
-		use: 'html-loader'
-	}
+	{ test: /\.(jpe?g|png|gif|svg)$/i, use: 'file-loader' },
+	{ test: /\.html$/, use: 'html-loader' },
+	{ test: /\.scss$/, use: ['raw-loader', 'sass-loader'] },
+	{ test: /\.css$/, use: ['style-loader', 'css-loader'] },
+	{ test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/, use: 'file-loader' }
 ]
 
 module.exports = {
@@ -51,7 +48,7 @@ module.exports = {
 	},
 	// each key is the name of the chunk, the value is entry point fot the chunk
 	entry: {
-		app: './src/main.ts'
+		app: ['zone.js/dist/zone', './src/main.ts']
 	},
 	// how to handle different types of modules
 	module: {
@@ -82,7 +79,9 @@ module.exports = {
 			name: 'vendor',
 			// all files from node_modules in a seperate chunk
 			minChunks: (module) => module.context && /node_modules/.test(module.context)
-		})
+		}),
+		new webpack.ContextReplacementPlugin(/(.+)?angular(\\|\/)core(.+)?/, path.join(__dirname, 'src'))
+		// new webpack.ContextReplacementPlugin(/angular(\\|\/)core(\\|\/)@angular/, path.resolve(__dirname, './notfound'))
 	],
 	resolve: {
 		// resolve files without extension to this extensions
