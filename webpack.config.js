@@ -20,7 +20,7 @@ module.exports = {
 	// base absolute path for resolving entry points
 	context: __dirname,
 	// source mapping style
-	devtool: 'inline-source-map',
+	// devtool: 'source-map',
 	// webpack dev server
 	devServer: {
 		// server static files
